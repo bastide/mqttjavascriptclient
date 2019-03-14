@@ -5,8 +5,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+	<script src="constants.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	    var client = new Paho.MQTT.Client("test.mosquitto.org", 8080, "RemiBastideClient");
+	    var client = new Paho.MQTT.Client(connectionInfo.host, connectionInfo.port, connectionInfo.clientID);
 	    client.onConnectionLost = onConnectionLost;
 	    client.onMessageArrived = onMessageArrived;
 	    client.connect({onSuccess: onConnect});
@@ -14,9 +15,9 @@
 	    function onConnect() {
 		// Once a connection has been made, make a subscription and send a message.
 		console.log("onConnect");
-		client.subscribe("bastide/grove/potentiometer");
+		client.subscribe(connectionInfo.topic);
 		message = new Paho.MQTT.Message("99");
-		message.destinationName = "bastide/grove/potentiometer";
+		message.destinationName = connectionInfo.topic;
 		client.send(message);
 	    }
 
@@ -33,6 +34,6 @@
 	</script>    
     </head>
     <body>
-	<div>TODO write content</div>
+	<div>Ouvrez la console</div>
     </body>
 </html>

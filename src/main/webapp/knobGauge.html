@@ -6,15 +6,8 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 	<script src="https://www.gstatic.com/charts/loader.js"                           type="text/javascript">/* global google */</script>
+	<script src="constants.js" type="text/javascript"></script>
 	<script type="text/javascript">
-
-		var connectionInfo = {
-			host: "broker.mqttdashboard.com",
-			port: 8000,
-			clientID: "knobGaugeClient",
-			topic: "bastide/grove/potentiometer"
-		};
-
 		// On charge le widget google
 		google.charts.load('current', {'packages': ['gauge']});
 		google.charts.setOnLoadCallback(drawChart);
