@@ -66,12 +66,16 @@
 <body>    
 	<h1>MQTT client whith Google charts visualization</h1>
 	This client connects to the MQTT server at:
-	<pre><script> document.write(connectionInfo.host);</script></pre> 
+		<pre><script> document.write(connectionInfo.host);</script></pre><br> 
 	and subscribes to the topic: 
-	<pre><script> document.write(connectionInfo.topic);</script></pre>
-	Publish value to <script> document.write(connectionInfo.topic);</script>, e.g.<br>
-	<pre>mosquitto_pub -h <script> document.write(connectionInfo.host);</script> -p <script> document.write(connectionInfo.port);</script> -t <script> document.write(connectionInfo.topic);</script> -m 75</pre><br>
+		<pre><script> document.write(connectionInfo.topic);</script></pre><br>
+	Format des messages : 
+		<pre>{"patientId":1,"sensorType":"typeOfSensor","measurement":1000}</pre><br>
+	Publish value to :
+		<pre><script> document.write(connectionInfo.topic);</script>, e.g.</pre><br>
+	<pre>mosquitto_pub -h <script> document.write(connectionInfo.host);</script> -p <script> document.write(connectionInfo.port);</script> -t <script> document.write(connectionInfo.topic);</script> -m "{\"patientId\":1, \"sensorType\": \"typeOfSensor\", \"measurement\":1000}"</pre><br>
 	or use the web client at : <a href="http://www.hivemq.com/demos/websocket-client/" target="_blank">http://www.hivemq.com/demos/websocket-client/</a>
+	<hr>
 	<ul>
 		<li><a href="https://developers.google.com/chart/interactive/docs/gallery">Google charts documentation</a></li>
 		<li><a href="http://www.eclipse.org/paho/files/jsdoc/index.html">javascript MQTT documentation</a></li>
