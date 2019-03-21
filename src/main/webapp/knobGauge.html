@@ -49,8 +49,11 @@
 
 			function onMessageArrived(message) {
 				var payLoad = message.payloadString;
-				console.log("Message arrived, topic:" + message.destinationName + ", value: " + message.payloadString);
-				var knobValue = parseInt(payLoad);
+				// Décoder le message JSON en objet javascript
+				var receivedMessage = JSON.parse(payLoad)
+				console.log("Message arrived, topic:" + message.destinationName);
+				console.log(receivedMessage)
+				var knobValue = receivedMessage.measurement;
 				if (!isNaN(knobValue) && (0 <= knobValue) && (1000 >= knobValue)) {
 					data.setValue(0, 1, knobValue);
 					chart.draw(data, options);
