@@ -17,8 +17,8 @@ newValue = 0
 
 while True:
     try:
-        # Capteur d'humidité sur sensehzt
-        newValue = sense.get_humidity()
+        # Capteur d'humidité sur sensehat
+        newValue = round(sense.get_humidity())
         print("valeur humidité: " + str(newValue))
         if newValue != oldValue:
             oldValue = newValue

@@ -18,7 +18,7 @@ newValue = 0
 while True:
     try:
         # Capteur de température sur sensehzt
-        newValue = sense.get_temperature()
+        newValue = round(sense.get_temperature())
         print("valeur température: " + str(newValue))
         if newValue != oldValue:
             oldValue = newValue
