@@ -27,7 +27,7 @@ while True:
                 "sensorType": "HUMIDITY",
                 "measurement": newValue,
             }
-            jsonMessage = json.dump(sentMessage)
+            jsonMessage = json.dumps(sentMessage)
             print("Sending: " + jsonMessage)
             client.publish(constants.TOPIC, jsonMessage)
 
