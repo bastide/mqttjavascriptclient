@@ -5,12 +5,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
-	<script src="https://www.gstatic.com/charts/loader.js"                           type="text/javascript">/* global google */</script>
-	<script src="constants.js" type="text/javascript"></script>
+	<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">/* global google */</script>
+	<script src="js/util.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		// On charge le widget google
-		google.charts.load('current', {'packages': ['gauge']});
+		google.charts.load('current', { 'packages': ['gauge'] });
 		google.charts.setOnLoadCallback(drawChart);
+		// Connection au broker mqtt
+		window.connection = connectionInfo(location);
 
 		function drawChart() {
 			// Initialisation du widget
@@ -30,16 +32,15 @@
 			var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
 			chart.draw(data, options);
 
-			// Connection au broker mqtt
-			var client = new Paho.MQTT.Client(connectionInfo.host, connectionInfo.port, connectionInfo.clientID);
+			const client = new Paho.MQTT.Client(window.connection.host, window.connection.port, window.connection.clientID);
 			client.onConnectionLost = onConnectionLost;
 			client.onMessageArrived = onMessageArrived;
-			client.connect({onSuccess: onConnect});
+			client.connect({ onSuccess: onConnect });
 
 			function onConnect() {
 				// Once a connection has been made, make a subscription 
 				console.log("Connected, subscribing.");
-				client.subscribe(connectionInfo.topic);
+				client.subscribe(connection.topic);
 			}
 
 			function onConnectionLost(responseObject) {
@@ -61,20 +62,23 @@
 			}
 		}
 
-	</script>    
+	</script>
 </head>
-<body>    
+
+<body>
 	<h1>MQTT client whith Google charts visualization</h1>
 	This client connects to the MQTT server at:
-		<pre><script> document.write(connectionInfo.host);</script></pre><br> 
-	and subscribes to the topic: 
-		<pre><script> document.write(connectionInfo.topic);</script></pre><br>
-	Format des messages : 
-		<pre>{"patientId":1,"sensorType":"typeOfSensor","measurement":1000}</pre><br>
+	<pre><script> document.write(window.connection.host);</script></pre><br>
+	and subscribes to the topic:
+	<pre><script> document.write(window.connection.topic);</script></pre><br>
+	Format des messages :
+	<pre>{"roomId":1,"sensorType":"typeOfSensor","measurement":1000}</pre><br>
 	Publish value to :
-		<pre><script> document.write(connectionInfo.topic);</script>, e.g.</pre><br>
-	<pre>mosquitto_pub -h <script> document.write(connectionInfo.host);</script> -p <script> document.write(connectionInfo.port);</script> -t <script> document.write(connectionInfo.topic);</script> -m "{\"patientId\":1, \"sensorType\": \"typeOfSensor\", \"measurement\":1000}"</pre><br>
-	or use the web client at : <a href="http://www.hivemq.com/demos/websocket-client/" target="_blank">http://www.hivemq.com/demos/websocket-client/</a>
+	<pre><script> document.write(window.connection.topic);</script>, e.g.</pre><br>
+	<pre>mosquitto_pub -h <script> document.write(window.connection.host);</script> -p <script> document.write(window.connection.port);</script> -t <script> document.write(window.connection.topic);</script> -m "{\"roomId\":1, \"sensorType\": \"typeOfSensor\", \"measurement\":1000}"</pre>
+	<br>
+	or use the web client at : <a href="http://www.hivemq.com/demos/websocket-client/"
+		target="_blank">http://www.hivemq.com/demos/websocket-client/</a>
 	<hr>
 	<ul>
 		<li><a href="https://developers.google.com/chart/interactive/docs/gallery">Google charts documentation</a></li>
@@ -83,4 +87,3 @@
 
 	<div id="chart_div" style="width: 400px; height: 120px;"></div>
 </body>
-
