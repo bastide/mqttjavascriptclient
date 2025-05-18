@@ -1,3 +1,3 @@
 BROKER = "broker.mqttdashboard.com"
-TOPIC = "bastide/grove/potentiometer"
+TOPIC = "pemesa/roomTemperature"
 PORT = 1883

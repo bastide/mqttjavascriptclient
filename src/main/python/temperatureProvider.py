@@ -17,15 +17,15 @@ newValue = 0
 
 while True:
     try:
-        # Capteur de température sur sensehzt
+        # Capteur de température sur sensehat
         newValue = round(sense.get_temperature())
         print("valeur température: " + str(newValue))
         if newValue != oldValue:
             oldValue = newValue
             sentMessage = {
-                "roomID": 1,
-                "sensorType": "TEMPERATURE",
-                "measurement": newValue,
+                "room_id": "Chambre patient 1",
+                "sensor_type": "senseHat",
+                "temperature": newValue,
             }
             jsonMessage = json.dumps(sentMessage)
             print("Sending: " + jsonMessage)
