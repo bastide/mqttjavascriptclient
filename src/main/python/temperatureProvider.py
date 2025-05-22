@@ -3,6 +3,7 @@ import time
 from sense_hat import SenseHat
 import paho.mqtt.client as mqtt
 import json
+import socket
 import constants
 
 sense = SenseHat()
@@ -14,7 +15,7 @@ time.sleep(1)
 
 oldValue = -1
 newValue = 0
-
+roomId = socket.gethostname()
 while True:
     try:
         # Capteur de température sur sensehat
@@ -23,7 +24,7 @@ while True:
         if newValue != oldValue:
             oldValue = newValue
             sentMessage = {
-                "room_id": "Chambre patient 1",
+                "room_id": roomId,
                 "sensor_type": "senseHat",
                 "temperature": newValue,
             }
